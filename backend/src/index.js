@@ -2,7 +2,19 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
 const { initDb, closeDb } = require('./db');
+
+// 确保 logs 目录存在
+const LOG_DIR = path.join(__dirname, '..', 'logs');
+if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR, { recursive: true });
+
+// 创建日志写入流
+const accessLogStream = fs.createWriteStream(
+  path.join(LOG_DIR, `access-${new Date().toISOString().slice(0, 10)}.log`),
+  { flags: 'a' }
+);
 
 const elementsRouter = require('./routes/elements');
 const coursesRouter  = require('./routes/courses');
@@ -21,8 +33,23 @@ app.use(cors({
   origin: process.env.FRONTEND_ORIGIN || '*',
   methods: ['GET', 'POST'],
 }));
+// 添加缓存控制头
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  next();
+});
 app.use(express.json());
-app.use(morgan('dev'));
+app.use(morgan('dev', {
+  stream: {
+    write: (msg) => {
+      process.stdout.write(msg);
+      accessLogStream.write(msg);
+    }
+  }
+}));
 
 /* ── Routes ── */
 app.use('/api/elements',     elementsRouter);
@@ -45,7 +72,7 @@ const server = app.listen(PORT, () => {
 });
 
 // Graceful shutdown
-process.on('SIGTERM', () => { closeDb(); server.close(); });
-process.on('SIGINT',  () => { closeDb(); server.close(); });
+process.on('SIGTERM', () => { accessLogStream.end(); closeDb(); server.close(); });
+process.on('SIGINT',  () => { accessLogStream.end(); closeDb(); server.close(); });
 
 module.exports = app;

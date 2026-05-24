@@ -1,7 +1,13 @@
 const BASE = import.meta.env.VITE_API_URL || '/api'
 
 async function get(path) {
-  const res = await fetch(`${BASE}${path}`)
+  const res = await fetch(`${BASE}${path}`, {
+    cache: 'no-store',
+    headers: {
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache',
+    },
+  })
   if (!res.ok) throw new Error(`API error: ${res.status}`)
   return res.json()
 }
