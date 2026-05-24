@@ -1,0 +1,546 @@
+/* ── Header ── */
+.header {
+  padding: 6rem 2.5rem 2rem;
+  text-align: center;
+}
+
+.title {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+
+.titleHighlight {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-left: 0.3em;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: 1rem;
+}
+
+/* ── Filter Bar ── */
+.filterBar {
+  padding: 0 2.5rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.filterBar > div {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filterBtn {
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.filterBtn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.filterActive {
+  background: rgba(123, 110, 246, 0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Grid Section ── */
+.gridSection {
+  padding: 0 2.5rem 6rem;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 1.75rem;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(123, 110, 246, 0.15);
+}
+
+.cardThumb {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbCanvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.card:hover .cardOverlay {
+  opacity: 1;
+}
+
+.cardBody {
+  padding: 1.3rem;
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: var(--text);
+}
+
+.cardDesc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+
+.cardEq {
+  font-size: 0.8rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--accent);
+  background: rgba(123, 110, 246, 0.08);
+  padding: 0.35rem 0.7rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 0.7rem;
+}
+
+.cardTags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.7rem;
+}
+
+.cardTag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+
+.cardSteps {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ── Overlay ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── Detail Panel ── */
+.detailPanel {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  max-width: 960px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.closeBtn:hover {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+}
+
+.detailHeader {
+  padding: 1.8rem 1.8rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.detailIcon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.detailTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.3rem;
+}
+
+.detailDesc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.equationBar {
+  margin: 0 1.8rem;
+  padding: 0.8rem 1rem;
+  background: rgba(123, 110, 246, 0.08);
+  border: 1px solid rgba(123, 110, 246, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.95rem;
+  color: var(--accent);
+  margin-top: 1rem;
+}
+
+/* ── Detail Body ── */
+.detailBody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 1.8rem;
+}
+
+/* ── Sim Panel ── */
+.simPanel {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.simLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 0.7rem;
+}
+
+.simCanvas {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+.stepDots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.stepDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.stepDot:hover {
+  border-color: var(--text-muted);
+}
+
+.stepDotActive {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(123, 110, 246, 0.5);
+}
+
+.stepDotDone {
+  background: var(--accent2);
+  border-color: var(--accent2);
+}
+
+/* ── Step Panel ── */
+.stepPanel {
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+
+.stepIndicator {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.8rem;
+}
+
+.stepContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stepText {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.observationBox {
+  background: rgba(123, 110, 246, 0.06);
+  border: 1px solid rgba(123, 110, 246, 0.12);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.obsLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent2);
+  margin-bottom: 0.4rem;
+}
+
+.obsText {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── Step Nav ── */
+.stepNav {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.navBtn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+
+.navBtn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.navBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Info Row ── */
+.infoRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 0 1.8rem 1.5rem;
+}
+
+.infoCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.2rem;
+}
+
+.infoTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  color: var(--text);
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.materialTag {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  background: rgba(92, 232, 216, 0.08);
+  color: var(--accent2);
+  border: 1px solid rgba(92, 232, 216, 0.15);
+  font-weight: 600;
+}
+
+.safetyList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.safetyList li {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.safetyList li::before {
+  content: '•';
+  position: absolute;
+  left: 0.2rem;
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .header {
+    padding: 4rem 1.2rem 2rem;
+  }
+  .gridSection {
+    padding: 0 1.2rem 4rem;
+  }
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+  .detailBody {
+    grid-template-columns: 1fr;
+  }
+  .infoRow {
+    grid-template-columns: 1fr;
+  }
+  .detailPanel {
+    border-radius: 1rem;
+    max-height: 100vh;
+  }
+  .detailHeader {
+    padding: 1.2rem;
+  }
+  .detailBody {
+    padding: 1rem 1.2rem;
+  }
+  .infoRow {
+    padding: 0 1.2rem 1.2rem;
+  }
+  .equationBar {
+    margin: 0 1.2rem;
+  }
+  .overlay {
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .cardThumb {
+    height: 160px;
+  }
+  .cardTitle {
+    font-size: 1.05rem;
+  }
+  .detailTitle {
+    font-size: 1.25rem;
+  }
+}
